@@ -5,6 +5,6 @@ import { Pool } from 'pg';
       user: 'postgres',
       host: 'localhost',
       password: '12345',
-      database: 'DB_Restaurante',
+      database: 'DB_AppDelivery',
       port: 5432
   });

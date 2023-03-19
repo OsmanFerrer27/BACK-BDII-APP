@@ -19,6 +19,82 @@ export const getUsers = async (
   }
 };
 
+export const getFactura = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const response: QueryResult = await pool.query(
+      "SELECT * FROM factura ORDER BY nro_factura ASC"
+    );
+    return res.status(200).json(response.rows);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json("Internal Server error");
+  }
+};
+
+export const getMesa = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const response: QueryResult = await pool.query(
+      "SELECT * FROM mesa ORDER BY nro_mesa ASC"
+    );
+    return res.status(200).json(response.rows);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json("Internal Server error");
+  }
+};
+
+export const getMesero = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const response: QueryResult = await pool.query(
+      "SELECT * FROM mesero ORDER BY id_mesero ASC"
+    );
+    return res.status(200).json(response.rows);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json("Internal Server error");
+  }
+};
+
+export const getSupervisor = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const response: QueryResult = await pool.query(
+      "SELECT * FROM supervisor ORDER BY id_supervisor ASC"
+    );
+    return res.status(200).json(response.rows);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json("Internal Server error");
+  }
+};
+
+export const getDetalleFactura = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const response: QueryResult = await pool.query(
+      "SELECT * FROM detalle_factura ORDER BY id_detallefactura ASC"
+    );
+    return res.status(200).json(response.rows);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json("Internal Server error");
+  }
+};
+
+
 export const getUserById = async (
   req: Request,
   res: Response
@@ -32,15 +108,15 @@ export const getUserById = async (
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const { email , nom_cliente, apellido_cliente, direccion_cliente, telefono_cliente, password } = req.body;
+  const { id_cliente , nombre_cliente, apellido_cliente, direccion_cliente, telefono_cliente } = req.body;
   const response = await pool.query(
-    "INSERT INTO cliente (id_cliente, nom_cliente, apellido_cliente, direccion_cliente, telefono_cliente, password) VALUES ($1, $2,$3, $4,$5,$6)",
-    [ email ,nom_cliente, apellido_cliente, direccion_cliente, telefono_cliente,password]
+    "INSERT INTO cliente (id_cliente, nombre_cliente, apellido_cliente, direccion_cliente, telefono_cliente) VALUES ($1, $2,$3, $4,$5)",
+    [ id_cliente ,nombre_cliente, apellido_cliente, direccion_cliente, telefono_cliente]
   );
   res.json({
     message: "User Added successfully",
     body: {
-      user: { email, nom_cliente, apellido_cliente, direccion_cliente, telefono_cliente,password },
+      user: { id_cliente, nombre_cliente, apellido_cliente, direccion_cliente, telefono_cliente},
     },
   });
 };
